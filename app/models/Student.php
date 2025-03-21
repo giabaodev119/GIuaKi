@@ -18,11 +18,12 @@ class Student {
     }
 
     public function getById($id) {
-        $query = "SELECT * FROM " . $this->table . " WHERE MaSV = ?";
+        $query = "SELECT * FROM SinhVien WHERE MaSV = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    
 
     public function create($data) {
         $query = "INSERT INTO " . $this->table . " (MaSV, HoTen, GioiTinh, NgaySinh, Hinh, MaNganh) VALUES (?, ?, ?, ?, ?, ?)";

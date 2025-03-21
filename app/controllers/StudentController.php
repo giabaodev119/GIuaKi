@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../models/Student.php';
 
+session_start(); // Bắt đầu session để lưu thông tin đăng nhập
+
 class StudentController {
     private $studentModel;
 
@@ -97,6 +99,44 @@ class StudentController {
             $this->studentModel->delete($id);
         }
         header("Location: /giuaki");
+        exit();
+    }
+    
+    public function show() {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header("Location: index.php");
+            exit();
+        }
+        $student = $this->studentModel->getById($id);
+        require_once __DIR__ . '/../views/students/show.php';
+    }
+
+    public function showLoginForm() {
+        require_once __DIR__ . '/../views/students/login.php';
+    }
+
+    public function authenticate() {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $maSV = $_POST["MaSV"];
+
+            // Kiểm tra MaSV trong database
+            $student = $this->studentModel->getById($maSV);
+            if ($student) {
+                $_SESSION["student"] = $student; // Lưu thông tin sinh viên vào session
+                header("Location: index.php");
+                exit();
+            } else {
+                $_SESSION["error"] = "Mã sinh viên không tồn tại!";
+                header("Location: index.php?action=login");
+                exit();
+            }
+        }
+    }
+
+    public function logout() {
+        session_destroy(); // Xóa tất cả session
+        header("Location: index.php?action=login");
         exit();
     }
     
