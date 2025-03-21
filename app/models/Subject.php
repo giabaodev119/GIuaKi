@@ -16,5 +16,11 @@ class Subject {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getById($maHP) {
+        $query = "SELECT * FROM HocPhan WHERE MaHP = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$maHP]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

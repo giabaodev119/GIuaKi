@@ -24,8 +24,9 @@
 
                 <?php if (isset($_SESSION["student"])): ?>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="index.php?action=register&id=<?= $_SESSION['student']['MaSV'] ?>">Đăng Ký Môn Học</a>
+                        <a class="nav-link text-white" href="index.php?action=register_subjects">Đăng Ký Môn Học</a>
                     </li>
+
                     <li class="nav-item">
                         <span class="nav-link text-white">Xin chào, <?= $_SESSION["student"]["HoTen"] ?></span>
                     </li>
